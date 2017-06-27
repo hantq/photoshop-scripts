@@ -5,23 +5,25 @@ var scale = '300%';
 var extensionName = '@3x.png';
 
 function exportScaledPNG() {
-    doc.resizeImage(scale, scale, doc.resolution, ResampleMethod.BICUBIC);
-    pngFile = File(docPath + '/' + docName + extensionName);
-    if (pngFile.exists) {
-        pngFile.remove();
-    }
-    pngSaveOptions = new PNGSaveOptions();
-    pngSaveOptions.compression = 9;
-    doc.saveAs(pngFile, pngSaveOptions, true, Extension.LOWERCASE);
-    doc.activeHistoryState = doc.historyStates[doc.historyStates.length - 2];
-    app.purge(PurgeTarget.HISTORYCACHES);
-    doc.save();
+  doc.resizeImage(scale, scale, doc.resolution, ResampleMethod.BICUBIC);
+  pngFile = File(docPath + '/' + docName + extensionName);
+
+  if (pngFile.exists) {
+    pngFile.remove();
+  }
+
+  pngSaveOptions = new PNGSaveOptions();
+  pngSaveOptions.compression = 9;
+  doc.saveAs(pngFile, pngSaveOptions, true, Extension.LOWERCASE);
+  doc.activeHistoryState = doc.historyStates[doc.historyStates.length - 2];
+  app.purge(PurgeTarget.HISTORYCACHES);
+  doc.save();
 }
 
 try {
-	exportScaledPNG();
+  exportScaledPNG();
 } catch (e) {
-    if (DialogModes.NO != app.playbackDisplayDialogs) {
-        alert(e + ' : ' + e.line);
-    }
+  if (DialogModes.NO !== app.playbackDisplayDialogs) {
+    alert(e + ' : ' + e.line);
+  }
 }
